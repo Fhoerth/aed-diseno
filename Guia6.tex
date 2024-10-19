@@ -681,7 +681,8 @@
     \paraTodo[unalinea]{j}{\ent}{0 \leq j < |c'.s| \implicaLuego c'.s[j] = c.elems[(c.inicio + j)\ mod\ |c'.s|]}
   }
   \pred{invRep}{c: \Clase{ColaCircular}{T}}{
-    0 \leq c.inicio, c.fin < length(c.elems) \yLuego \\
+    (0 \leq c.inicio \leq c.fin < length(c.elems)) \lor \\
+    (0 \leq c.fin \leq c.inicio < length(c.elems)) \yLuego \\
     \paraTodo[unalinea]{j}{\ent}{0 \leq j < cantidadElementos(c) \implicaLuego def(c.elems[j])}
   }
   \vspace{1em}

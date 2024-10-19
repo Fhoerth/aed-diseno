@@ -1,0 +1,6 @@
+__ignore__
+__minted-test
+.vscode
+implementaciones
+out/*
+!out/Guia6.pdf

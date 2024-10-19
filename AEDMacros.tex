@@ -1,0 +1,203 @@
+\usepackage[spanish,activeacute,es-tabla]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{dsfont}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage[strict]{changepage}
+\usepackage[top=1cm,bottom=2cm,left=1cm,right=1cm]{geometry}%
+\usepackage{color}%
+\newcommand{\tocarEspacios}{%
+	\addtolength{\leftskip}{3em}%
+	\setlength{\parindent}{0em}%
+}
+
+% Especificacion de procs
+
+\newcommand{\In}{\textsf{in }}
+\newcommand{\Out}{\textsf{out }}
+\newcommand{\Inout}{\textsf{inout }}
+
+\newcommand{\encabezadoDeProc}[4]{%
+	% Ponemos la palabrita problema en tt
+	%  \noindent%
+	{\normalfont\bfseries\ttfamily proc}%
+	% Ponemos el nombre del problema
+	\ %
+	{\normalfont\ttfamily #2}%
+	\
+	% Ponemos los parametros
+	(#3)%
+	\ifthenelse{\equal{#4}{}}{}{%
+		% Por ultimo, va el tipo del resultado
+		\ : #4}
+}
+
+\newcommand{\LangIndent}[1]{%
+    \hspace*{#1em}%
+}
+
+\newcommand{\LangIfThenElse}[4][0]{%
+  \LangIndent{#1}\texttt{if (#2) \{}\\
+  \LangIndent{#1}\LangIndent{2}\texttt{#3}\\
+  \LangIndent{#1}\texttt{\} else \{}\\
+  \LangIndent{#1}\LangIndent{2}\texttt{#4}\\
+  \LangIndent{#1}\texttt{\}}%
+}
+
+\newenvironment{proc}[4][res]{%
+
+	% El parametro 1 (opcional) es el nombre del resultado
+	% El parametro 2 es el nombre del problema
+	% El parametro 3 son los parametros
+	% El parametro 4 es el tipo del resultado
+	% Preambulo del ambiente problema
+	% Tenemos que definir los comandos requiere, asegura, modifica y aux
+	\newcommand{\requiereTAD}[2][]{%
+		{\normalfont\bfseries\ttfamily requiereTAD}%
+		\ifthenelse{\equal{##1}{}}{}{\ {\normalfont\ttfamily ##1} :}\ %
+		\{\ensuremath{##2}\}%
+		{\normalfont\bfseries\,\par}%
+	}
+	\newcommand{\requiere}[2][]{%
+		{\normalfont\bfseries\ttfamily requiere}%
+		\ifthenelse{\equal{##1}{}}{}{\ {\normalfont\ttfamily ##1} :}\ %
+		\{\ensuremath{##2}\}%
+		{\normalfont\bfseries\,\par}%
+	}
+	\newcommand{\asegura}[2][]{%
+		{\normalfont\bfseries\ttfamily asegura}%
+		\ifthenelse{\equal{##1}{}}{}{\ {\normalfont\ttfamily ##1} :}\
+		\{\ensuremath{##2}\}%
+		{\normalfont\bfseries\,\par}%
+	}
+	\newcommand{\aseguraTAD}[2][]{%
+	{\normalfont\bfseries\ttfamily aseguraTAD}%
+	\ifthenelse{\equal{##1}{}}{}{\ {\normalfont\ttfamily ##1} :}\
+		\{\ensuremath{##2}\}%
+		{\normalfont\bfseries\,\par}%
+	}
+	\renewcommand{\aux}[4]{%
+		{\normalfont\bfseries\ttfamily aux\ }%
+		{\normalfont\ttfamily ##1}%
+		\ifthenelse{\equal{##2}{}}{}{\ (##2)}\ : ##3\, = \ensuremath{##4}%
+		{\normalfont\bfseries\,;\par}%
+	}
+	\renewcommand{\pred}[3]{%
+		{\normalfont\bfseries\ttfamily pred }%
+		{\normalfont\ttfamily ##1}%
+		\ifthenelse{\equal{##2}{}}{}{\ (##2) }%
+		\{%
+		\begin{adjustwidth}{+5em}{}
+			\ensuremath{##3}
+		\end{adjustwidth}
+		\}%
+		{\normalfont\bfseries\,\par}%
+	}
+	
+	\newcommand{\res}{#1}
+	\vspace{1ex}
+	\noindent
+	\encabezadoDeProc{#1}{#2}{#3}{#4}
+	% Abrimos la llave
+	\par%
+	\tocarEspacios
+}
+{
+	% Cerramos la llave
+	\vspace{1ex}
+}
+
+\newcommand{\aux}[4]{%
+	{\normalfont\bfseries\ttfamily\noindent aux\ }%
+	{\normalfont\ttfamily #1}%
+	\ifthenelse{\equal{#2}{}}{}{\ (#2)}\ : #3\, = \ensuremath{#4}%
+	{\normalfont\bfseries\,;\par}%
+}
+
+\newcommand{\pred}[3]{%
+	{\normalfont\bfseries\ttfamily\noindent pred }%
+	{\normalfont\ttfamily #1}%
+	\ifthenelse{\equal{#2}{}}{}{\ (#2) }%
+	\{%
+	\begin{adjustwidth}{+2em}{}
+		\ensuremath{#3}
+	\end{adjustwidth}
+	\}%
+	{\normalfont\bfseries\,\par}%
+}
+
+% Tipos
+
+\newcommand{\nat}{\ensuremath{\mathds{N}}}
+\newcommand{\ent}{\ensuremath{\mathds{Z}}}
+\newcommand{\float}{\ensuremath{\mathds{R}}}
+\newcommand{\bool}{\ensuremath{\mathsf{Bool}}}
+\newcommand{\cha}{\ensuremath{\mathsf{Char}}}
+\newcommand{\str}{\ensuremath{\mathsf{String}}}
+
+% Logica
+
+\newcommand{\True}{\ensuremath{\mathrm{true}}}
+\newcommand{\False}{\ensuremath{\mathrm{false}}}
+\newcommand{\Then}{\ensuremath{\rightarrow}}
+\newcommand{\Iff}{\ensuremath{\leftrightarrow}}
+\newcommand{\implica}{\ensuremath{\longrightarrow}}
+\newcommand{\IfThenElse}[3]{\ensuremath{\mathsf{if}\ #1\ \mathsf{then}\ #2\ \mathsf{else}\ #3\ \mathsf{fi}}}
+\newcommand{\yLuego}{\land _L}
+\newcommand{\oLuego}{\lor _L}
+\newcommand{\implicaLuego}{\implica _L}
+
+\newcommand{\cuantificador}[5]{%
+	\ensuremath{(#2 #3: #4)\ (%
+		\ifthenelse{\equal{#1}{unalinea}}{
+			#5
+		}{
+			$ % exiting math mode
+			\begin{adjustwidth}{+2em}{}
+				$#5$%
+			\end{adjustwidth}%
+			$ % entering math mode
+		}
+		)}
+}
+
+\newcommand{\existe}[4][]{%
+	\cuantificador{#1}{\exists}{#2}{#3}{#4}
+}
+\newcommand{\paraTodo}[4][]{%
+	\cuantificador{#1}{\forall}{#2}{#3}{#4}
+}
+
+%listas
+
+\newcommand{\TLista}[1]{\ensuremath{seq \langle #1\rangle}}
+\newcommand{\lvacia}{\ensuremath{[\ ]}}
+\newcommand{\lv}{\ensuremath{[\ ]}}
+\newcommand{\longitud}[1]{\ensuremath{|#1|}}
+\newcommand{\cons}[1]{\ensuremath{\mathsf{addFirst}}(#1)}
+\newcommand{\indice}[1]{\ensuremath{\mathsf{indice}}(#1)}
+\newcommand{\conc}[1]{\ensuremath{\mathsf{concat}}(#1)}
+\newcommand{\cab}[1]{\ensuremath{\mathsf{head}}(#1)}
+\newcommand{\cola}[1]{\ensuremath{\mathsf{tail}}(#1)}
+\newcommand{\sub}[1]{\ensuremath{\mathsf{subseq}}(#1)}
+\newcommand{\en}[1]{\ensuremath{\mathsf{en}}(#1)}
+\newcommand{\cuenta}[2]{\mathsf{cuenta}\ensuremath{(#1, #2)}}
+\newcommand{\suma}[1]{\mathsf{suma}(#1)}
+\newcommand{\twodots}{\ensuremath{\mathrm{..}}}
+\newcommand{\masmas}{\ensuremath{++}}
+\newcommand{\matriz}[1]{\TLista{\TLista{#1}}}
+\newcommand{\seqchar}{\TLista{\cha}}
+
+\renewcommand{\lstlistingname}{Código}
+\lstset{% general command to set parameter(s)
+	language=Java,
+	morekeywords={endif, endwhile, skip},
+	basewidth={0.47em,0.40em},
+	columns=fixed, fontadjust, resetmargins, xrightmargin=5pt, xleftmargin=15pt,
+	flexiblecolumns=false, tabsize=4, breaklines, breakatwhitespace=false, extendedchars=true,
+	numbers=left, numberstyle=\tiny, stepnumber=1, numbersep=9pt,
+	frame=l, framesep=3pt,
+	captionpos=b,
+}

@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{+w}{    }\PYG{n}{res}\PYG{+w}{ }\PYG{p}{:}\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{i}\PYG{+w}{ }\PYG{p}{:}\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{while}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{i}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{s}\PYG{p}{.}\PYG{n+na}{size}\PYG{p}{())}\PYG{+w}{ }\PYG{k}{do}
+\PYG{+w}{      }\PYG{n}{res}\PYG{+w}{ }\PYG{p}{:}\PYG{o}{=}\PYG{+w}{ }\PYG{n}{res}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{s}\PYG{o}{[}\PYG{n}{i}\PYG{o}{]}\PYG{p}{;}
+\PYG{+w}{      }\PYG{n}{i}\PYG{+w}{ }\PYG{p}{:}\PYG{o}{=}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+m+mi}{30}
+\PYG{+w}{    }\PYG{n}{endwhile}
+\end{Verbatim}

@@ -264,19 +264,23 @@
           nuevosDatos:= new Array<T>(c1.tamaño + c2.tamaño)
 
       var i: int
-      var j: int
           i:= 0
-          j:= 0
 
       while (i < c1.tamaño) do
         nuevosDatos[i]:= c1.datos[i]
         i:= i + 1
       endwhile
 
+      var j: int
+          j:= 0
+          i:= 0
+
       while (j < c2.tamaño) do
         if !pertenece(c1, c2.datos[j]) then
-          nuevosDatos[c1.tamaño + j]:= c2.datos[j]
+          nuevosDatos[c1.tamaño + i]:= c2.datos[j]
+          i:= i + 1
         endif
+
         j:= j + 1
       endwhile
 

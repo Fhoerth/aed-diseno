@@ -274,7 +274,9 @@
       endwhile
 
       while (j < c2.tamaño) do
-        nuevosDatos[(i - 1) + j]:= c2.datos[j]
+        if !pertenece(c1, c2.datos[j]) then
+          nuevosDatos[c1.tamaño + j]:= c2.datos[j]
+        endif
         j:= j + 1
       endwhile
 

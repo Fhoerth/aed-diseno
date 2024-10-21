@@ -146,7 +146,8 @@
         j:= j + 1
       endwhile
 
-      return eliminarSiguiente(l, nodoPrevio)
+      eliminarSiguiente(l, nodoPrevio)
+      return
     \end{ImplementationCode}
   \end{proc}
   \begin{proc}{concatenar}{\Inout lista1: \Clase{ListaEnlazada}{T}, \In lista2: \Clase{ListaEnlazada}{T}}{}
@@ -624,7 +625,8 @@
       endwhile
       
       // Actualizo el arreglo correspondiente para esta coord
-      return actualizarOrdenadosPorCoord(c, coord, nuevosOrdenadosPorCoords)
+      actualizarOrdenadosPorCoord(c, coord, nuevosOrdenadosPorCoords)
+      return
     \end{ImplementationCode}
   \end{proc}
   \begin{proc}{agregar}{\Inout c: \texttt{ConjuntoRapido}, \In t: Tupla}{}

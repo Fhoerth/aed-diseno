@@ -40,7 +40,7 @@
     \\ sinCiclos(l.primero, \{\}) \yLuego largoOK(l.primero, l.longitud) \land alcanzable(l.primero, l.ultimo)
   }
   \pred{sinCiclos}{nodo: \Clase{NodoLista}{T}, visitados: \conj{\Clase{NodoLista}{T}}}{
-    nodo = Null \oLuego (nodo \notin visitados \yLuego sinCiclos(nodo.siguiente, visitados \union \{n_0\}))
+    nodo = Null \oLuego (nodo \notin visitados \yLuego sinCiclos(nodo.siguiente, visitados \union \{nodo\}))
   }
   \pred{largoOK}{nodo: \Clase{NodoLista}{T}, longitud: \ent}{
     (nodo = Null \land longitud = 0) \lor \\
@@ -118,11 +118,11 @@
   \begin{proc}{eliminarRapido}{\Inout l: \Clase{ListaEnlazada}{T}, \In nodoPrevio: \Clase{NodoLista}{T}}{}
     \begin{ImplementationCode}{360px}
       if nodoPrevio == null then
-        return sacarPrimero(c)
+        return eliminarPrimero(c)
       endif
       
       if nodoPrevio.siguiente == l.ultimo
-        return sacarUltimo(c, nodoPrevio)
+        return eliminarUltimo(c, nodoPrevio)
       endif
 
       nodoPrevio.siguiente:= nodoPrevio.siguiente.siguiente
@@ -347,7 +347,7 @@
     alcanzable(l.datos.primero, l.datos.ultimo) \land sinRepetidos(l.datos.primero)
   }
   \pred{sinCiclos}{nodo: \Clase{NodoLista}{T}, visitados: \conj{\Clase{NodoLista}{T}}}{
-    nodo = Null \oLuego (nodo \notin visitados \yLuego sinCiclos(nodo.siguiente, visitados \union \{n_0\}))
+    nodo = Null \oLuego (nodo \notin visitados \yLuego sinCiclos(nodo.siguiente, visitados \union \{nodo\}))
   }
   \pred{largoOK}{nodo: \Clase{NodoLista}{T}, longitud: \ent}{
     (nodo = Null \land longitud = 0) \lor \\

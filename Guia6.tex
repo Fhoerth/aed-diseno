@@ -118,13 +118,16 @@
   \begin{proc}{eliminarSiguiente}{\Inout l: \Clase{ListaEnlazada}{T}, \In nodoPrevio: \Clase{NodoLista}{T}}{}
     \begin{ImplementationCode}{360px}
       if nodoPrevio == null then
-        return eliminarPrimero(c)
+        eliminarPrimero(c)
+        return
       endif
       
       if nodoPrevio.siguiente == l.ultimo
-        return eliminarUltimo(c, nodoPrevio)
+        eliminarUltimo(c, nodoPrevio)
+        return
       endif
 
+      // Eliminar nodo intermedio
       nodoPrevio.siguiente:= nodoPrevio.siguiente.siguiente
       l.longitud:= l.longitud - 1
 

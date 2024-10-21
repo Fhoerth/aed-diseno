@@ -191,7 +191,7 @@
     \paraTodo[unalinea]{t}{T}{t \in c'.elems \leftrightarrow t \in subseq(c.datos, 0, c.tama$ñ$o)}
   }
   \pred{invRep}{c: \Clase{ConjuntoAcotadoArr}{T}}{
-    0 \leq c.tama$ñ$o \leq length(c.datos) \land
+    0 \leq c.tama$ñ$o < length(c.datos) \land
     sinRepetidos(c) \land
     \paraTodo[unalinea]{j}{\ent}{0 \leq j < c.tama$ñ$o \implicaLuego def(c.datos[j])}
   }
@@ -214,40 +214,36 @@
   \end{proc}
   \begin{proc}{agregar}{\Inout c: \Clase{ConjuntoAcotadoArr}{T}, t: T}{}
     \begin{ImplementationCode}{320px}
-      var nuevosDatos: Array<T>
-          nuevosDatos:= new Array<T>(c.tamaño + 1)
-
+      if !pertenece(c, t) then
+        c.datos[c.tamaño]:= t
+        c.tamaño:= c.tamaño + 1
+      endif
+      
+      return
+    \end{ImplementationCode}
+  \end{proc}
+  \begin{proc}{sacarSiPertenece}{\Inout c: \Clase{ConjuntoAcotadoArr}{T}, t: T}{}
+    \begin{ImplementationCode}{320px}
       var i: int
           i:= 0
 
       while (i < c.tamaño) do
-        nuevosDatos[i]:= c.datos[i]
+        if c.datos[i] == t then
+          c.datos[i]:= c.datos[c.tamaño - 1]
+          c.tamaño:= c.tamaño - 1
+
+          return
+        endif
+        
         i:= i + 1
       endwhile
-
-      nuevosDatos[c.tamaño]:= t
-
-      c.datos:= nuevosDatos
-      c.tamaño:= c.tamaño + 1
 
       return
     \end{ImplementationCode}
   \end{proc}
   \begin{proc}{sacar}{\Inout c: \Clase{ConjuntoAcotadoArr}{T}, t: T}{}
     \begin{ImplementationCode}{320px}
-      var i: int
-          i:= 0
-
-      while (i < c.tamaño && c.datos[i] != t) do
-        i:= i + 1
-      endwhile
-
-      var elementoAEliminar: T
-          elementoAEliminar:= c.datos[i]
-
-      c.datos[i]:= c.datos[c.tamaño - 1]
-      c.datos[c.tamaño - 1] = elementoAEliminar
-      c.tamaño:= c.tamaño - 1
+      sacarSiPertenece(c, t)
 
       return
     \end{ImplementationCode}
@@ -263,60 +259,27 @@
   \end{proc}
   \begin{proc}{unir}{\Inout c1: \Clase{ConjuntoAcotadoArr}{T}, \In c2: \Clase{ConjuntoAcotadoArr}{T}}{}
     \begin{ImplementationCode}{320px}
-      var nuevosDatos: Array<T>
-          nuevosDatos:= new Array<T>(c1.tamaño + c2.tamaño)
-
       var i: int
           i:= 0
 
-      while (i < c1.tamaño) do
-        nuevosDatos[i]:= c1.datos[i]
+      while (i < c2.tamaño) do
+        agregar(c1, c2.datos[i])
         i:= i + 1
       endwhile
-
-      var j: int
-          j:= 0
-          i:= 0
-
-      while (j < c2.tamaño) do
-        if !pertenece(c1, c2.datos[j]) then
-          nuevosDatos[c1.tamaño + i]:= c2.datos[j]
-          i:= i + 1
-        endif
-
-        j:= j + 1
-      endwhile
-
-      c1.datos:= nuevosDatos
-      c1.tamaño:= c1.tamaño + i
 
       return
     \end{ImplementationCode}
   \end{proc}
   \begin{proc}{intersecar}{\Inout c1: \Clase{ConjuntoAcotadoArr}{T}, \In c2: \Clase{ConjuntoAcotadoArr}{T}}{}
     \begin{ImplementationCode}{360px}
-      var nuevosDatos: Array<T>
-          nuevosDatos:= new Array<T>(min(c1.tamaño, c2.tamaño))
-      
       var i: int
-      var j: int
           i:= 0
-          j:= 0
 
-      while (i < c1.tamaño) do
-        var elemento: T
-            elemento:= c1.datos[i]
-
-        if pertenece(c2, elemento) then
-          nuevosDatos[j]:= elemento
-          j:= j + 1
-        endif
+      while (i < c2.tamaño) do
+        sacarSiPertenece(c1, c2.datos[i])
 
         i:= i + 1
       endwhile
-      
-      c1.datos:= nuevosDatos
-      c1.tamaño:= j
 
       return
     \end{ImplementationCode}

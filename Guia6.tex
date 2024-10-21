@@ -126,7 +126,6 @@
       endif
 
       nodoPrevio.siguiente:= nodoPrevio.siguiente.siguiente
-
       l.longitud:= l.longitud - 1
 
       return
@@ -140,7 +139,7 @@
           nodoPrevio:= null
           nodoActual:= l.primero
           j:= 0
-      
+
       while (j < i) do
         nodoPrevio:= nodoActual
         nodoActual:= nodoActual.siguiente
@@ -406,6 +405,9 @@
   \end{proc}
   \begin{proc}{sacar}{\Inout c: \Clase{ConjuntoLista}{T}, t: T}{}
     \begin{ImplementationCode}{360px}
+      var l: ListaEnlazada<T>
+          l:= c.datos
+
       var nodoPrevio: NodoLista<T>
       var nodoActual: NodoLista<T>
           nodoPrevio:= null
@@ -413,14 +415,15 @@
       
       while (nodoActual != null) do
         if nodoActual.valor == t then
-          c.datos.eliminarSiguiente(c.datos, nodoPrevio)
-          c.tamaño = c.datos.longitud
+          l.eliminarSiguiente(l, nodoPrevio)
           return
         endif
 
         nodoPrevio:= nodoActual
         nodoActual:= nodoActual.siguiente
       endwhile
+
+      c.tamaño:= l.longitud
 
       return
     \end{ImplementationCode}
@@ -440,19 +443,24 @@
   \end{proc}
   \begin{proc}{intersecar}{\Inout c1: \Clase{ConjuntoLista}{T}, \In c2: \Clase{ConjuntoLista}{T}}{}
     \begin{ImplementationCode}{360px}
+      var l: ListaEnlazada<T>
+          l:= c.datos
+
       var nodoPrevio: NodoLista<T>
       var nodoActual: NodoLista<T>
           nodoPrevio:= null
-          nodoActual:= c2.datos.primero
+          nodoActual:= c.datos.primero
       
       while (nodoActual != null) do
         if !pertenece(c2, nodoActual.valor) then
-          sacarRapido(c1, nodoPrevio)
+          l.eliminarSiguiente(l, nodoPrevio)
         endif
 
         nodoPrevio:= nodoActual
         nodoActual:= nodoActual.siguiente
       endwhile
+
+      c.tamaño:= l.longitud
 
       return
     \end{ImplementationCode}

@@ -617,15 +617,16 @@
       nuevosOrdenadosPorCoords[posicionValorCoord]:= length(c.elems) - 1
 
       // Copio la porción del arreglo que mantiene el orden superior a posicionValorCoord
-      var j: int
-          j:= posicionValorCoord + 1
+      i:= posicionValorCoord + 1
 
       while (j <= length(ordenadosPorCoord)) do
-        nuevosOrdenadosPorCoords[j]:= ordenadosPorCoord[j - 1]
+        nuevosOrdenadosPorCoords[i]:= ordenadosPorCoord[i - 1]
+        i:= i + 1
       endwhile
       
       // Actualizo el arreglo correspondiente para esta coord
       actualizarOrdenadosPorCoord(c, coord, nuevosOrdenadosPorCoords)
+
       return
     \end{ImplementationCode}
   \end{proc}

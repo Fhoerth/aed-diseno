@@ -4,5 +4,6 @@ __minted-test
 implementaciones
 out/*
 !out/Guia6.pdf
+!out/Guia5.pdf
 _minted-test
 .DS_Store

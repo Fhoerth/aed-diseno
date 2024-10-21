@@ -4,6 +4,8 @@
 \usepackage{tcolorbox}
 \usepackage{xcolor}
 \usepackage{ragged2e}
+\usepackage{changepage}
+\usepackage{amssymb}
 \usepackage[outputdir=out]{minted}
 \DeclareRobustCommand{\ttfamily}{\fontencoding{T1}\fontfamily{lmtt}\selectfont}
 
@@ -14,6 +16,27 @@
   xleftmargin=10px,
   aboveskip=0pt
 }
+
+\newcommand{\limn}{\lim_{n \to \infty}}
+\newcommand{\ceil}[1]{%
+  \left\lceil #1 \right\rceil%
+}
+\newcommand{\reales}{\mathbb{R}}
+\newcommand{\limite}[2]{%
+  \lim_{#1 \to #2}
+}
+
+\newenvironment{groupIzq}[1]{%
+  \begin{list}{}{%
+      \setlength{\leftmargin}{#1}%
+      \setlength{\topsep}{0pt} % Elimina el espacio superior
+      \setlength{\partopsep}{0pt} % Asegura que no haya espacio extra
+    }
+  \item[]
+}{%
+  \end{list}
+}
+\newcommand{\demoline}{\vspace{0.5em}}
 
 \newcommand{\Indent}{\hspace*{0.75cm}}
 \newcommand{\MiniIndent}{\hspace*{0.325cm}}

@@ -115,7 +115,7 @@
       return
     \end{ImplementationCode}
   \end{proc}
-  \begin{proc}{eliminarRapido}{\Inout l: \Clase{ListaEnlazada}{T}, \In nodoPrevio: \Clase{NodoLista}{T}}{}
+  \begin{proc}{eliminarSiguiente}{\Inout l: \Clase{ListaEnlazada}{T}, \In nodoPrevio: \Clase{NodoLista}{T}}{}
     \begin{ImplementationCode}{360px}
       if nodoPrevio == null then
         return eliminarPrimero(c)
@@ -147,7 +147,7 @@
         j:= j + 1
       endwhile
 
-      return eliminarRapido(l, nodoPrevio)
+      return eliminarSiguiente(l, nodoPrevio)
     \end{ImplementationCode}
   \end{proc}
   \begin{proc}{concatenar}{\Inout lista1: \Clase{ListaEnlazada}{T}, \In lista2: \Clase{ListaEnlazada}{T}}{}
@@ -392,14 +392,6 @@
       return
     \end{ImplementationCode}
   \end{proc}
-  \begin{proc}{sacarRapido}{\Inout c: \Clase{ConjuntoLista}{T}, \In nodoPrevio: \Clase{NodoLista}{T}}{}
-    \begin{ImplementationCode}{360px}
-      c.datos.eliminarRapido(c.datos, nodoPrevio)
-      c.tamaño:= c.datos.longitud
-
-      return
-    \end{ImplementationCode}
-  \end{proc}
   \begin{proc}{agregar}{\Inout c: \Clase{ConjuntoLista}{T}, t: T}{}
     \begin{ImplementationCode}{360px}
       var pertenece: Boolean
@@ -421,7 +413,9 @@
       
       while (nodoActual != null) do
         if nodoActual.valor == t then
-          return sacarRapido(c, nodoPrevio)
+          c.datos.eliminarSiguiente(c.datos, nodoPrevio)
+          c.tamaño = c.datos.longitud
+          return
         endif
 
         nodoPrevio:= nodoActual

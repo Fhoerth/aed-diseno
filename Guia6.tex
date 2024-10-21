@@ -101,7 +101,7 @@
       return
     \end{ImplementationCode}
   \end{proc}
-  \begin{proc}{eliminarUltimo}{\Inout l: \Clase{ListaEnlazada}{T}, penultimoNodo: \Clase{NodoLista}{T}}{}
+  \begin{proc}{eliminarUltimo}{\Inout l: \Clase{ListaEnlazada}{T}, \In penultimoNodo: \Clase{NodoLista}{T}}{}
     \begin{ImplementationCode}{360px}
       penultimoNodo.siguiente:= null
       l.ultimo:= penultimoNodo
@@ -118,12 +118,12 @@
   \begin{proc}{eliminarSiguiente}{\Inout l: \Clase{ListaEnlazada}{T}, \In nodoPrevio: \Clase{NodoLista}{T}}{}
     \begin{ImplementationCode}{360px}
       if nodoPrevio == null then
-        eliminarPrimero(c)
+        eliminarPrimero(l)
         return
       endif
       
       if nodoPrevio.siguiente == l.ultimo
-        eliminarUltimo(c, nodoPrevio)
+        eliminarUltimo(l, nodoPrevio)
         return
       endif
 
@@ -234,7 +234,7 @@
 
           return
         endif
-        
+
         i:= i + 1
       endwhile
 

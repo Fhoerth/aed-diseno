@@ -195,6 +195,14 @@
       return
     \end{ImplementationCode}
   \end{proc}
+  \begin{proc}{sacarPorIndice}{\Inout c: \Clase{ConjuntoAcotadoArr}{T}, \In i: int}{}
+    \begin{ImplementationCode}{320px}
+      c.datos[i]:= c.datos[c.tamaño - 1]
+      c.tamaño:= c.tamaño - 1
+
+      return
+    \end{ImplementationCode}
+  \end{proc}
   \begin{proc}{sacar}{\Inout c: \Clase{ConjuntoAcotadoArr}{T}, \In t: T}{}
     \begin{ImplementationCode}{320px}
       var i: int
@@ -202,8 +210,7 @@
 
       while (i < c.tamaño) do
         if c.datos[i] == t then
-          c.datos[i]:= c.datos[c.tamaño - 1]
-          c.tamaño:= c.tamaño - 1
+          sacarPorIndice(c, i)
 
           return
         endif
@@ -232,9 +239,9 @@
       var i: int
           i:= 0
 
-      while (i < c1.tamaño) do
-        if !pertenece(c2, c1.datos[i]) then
-          sacar(c1, c1.datos[i])
+      while (i < c1.tamaño) do              // O(n)
+        if !pertenece(c2, c1.datos[i]) then // O(m)
+          sacarPorIndice(c1, i)             // O(1)
         endif
 
         i:= i + 1
@@ -242,9 +249,9 @@
 
       i:= 0
 
-      while (i < c2.tamaño) do
-        if !pertenece(c1, c2.datos[i]) then
-          sacar(c1, c2.datos[i])
+      while (i < c2.tamaño) do              // O(m)
+        if !pertenece(c1, c2.datos[i]) then // O(n)
+          sacarPorIndice(c1, i)             // O(1)
         endif
 
         i:= i + 1

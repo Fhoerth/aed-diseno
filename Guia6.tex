@@ -295,141 +295,130 @@
   \label{fig:ej_3}
 \end{figure}
 \vspace{1em}
-\begin{ModuloImplements}{ConjuntoLista<T>}{ConjuntoAcotado<T>}
+\begin{ModuloImplements}{ConjuntoLista<T>}{Conjunto<T>}
   \begin{Vars}
     \Var{datos}{\Clase{ListaEnlazada}{T}}
     \Var{tamaño}{\primitiva{int}}
   \end{Vars}
+ 
+  \pred{sinRepetidos}{c: \Clase{ConjuntoLista}{T}} {
+    \paraTodo[unalinea]{i, j}{\ent}{(0 \leq i, j < |c.datos.s| \yLuego c.datos.s[i] = c.datos.s[j]) \implica i = j}
+  }
+  \pred{abs}{c: \Clase{ConjuntoLista}{T}, c': \Clase{Conjunto}{T}}{
+    |c'.elems| = c.tama$ñ$o \land \paraTodo[unalinea]{t}{T}{t \in c'.elems \leftrightarrow t \in c.datos.s}
+  }
+  \pred{invRep}{c: \Clase{ConjuntoLista}{T}}{
+    c.tama$ñ$o = |c.datos.s| \land sinRepetidos(c)
+  }
 
-  \pred{pertenece}{nodo: \Clase{NodoLista}{T}, t: T}{
-    nodo \neq Null \yLuego (nodo.valor = T \lor (pertenece(nodo.siguiente, T))
-  }
-  \pred{abs}{l: \Clase{ListaEnlazada}{T}, s': \Clase{Seceuencia}{T}}{
-    |l'.s| = l.longitud \yLuego \paraTodo[unalinea]{t}{T}{t \in s'.elems \leftrightarrow pertenece(l.datos.primero, t)}
-  }
-  \pred{invRep}{l: \Clase{ConjuntoLista}{T}}{
-    l.tama$ñ$o \geq 0 \land l.datos.longitud = l.tama$ñ$o \land \\
-    sinCiclos(l.datos.primero, \{\}) \yLuego largoOK(l.datos.primero, l.tama$ñ$o) \land \\
-    alcanzable(l.datos.primero, l.datos.ultimo) \land sinRepetidos(l.datos.primero)
-  }
-  \pred{sinCiclos}{nodo: \Clase{NodoLista}{T}, visitados: \conj{\Clase{NodoLista}{T}}}{
-    nodo = Null \oLuego (nodo \notin visitados \yLuego sinCiclos(nodo.siguiente, visitados \union \{nodo\}))
-  }
-  \pred{largoOK}{nodo: \Clase{NodoLista}{T}, longitud: \ent}{
-    (nodo = Null \land longitud = 0) \lor \\
-    (nodo \neq Null \yLuego largoOK(nodo.siguiente, longitud - 1))
-  }
-  \pred{alcanzable}{$n_0$: \Clase{NodoLista}{T}, $n_1$: \Clase{NodoLista}{T}}{
-    (n_0 = n_1) \lor (n_0 \neq Null \yLuego alcanzable(n_0.siguiente, n_1))
-  }
-  \pred{sinRepetidos}{nodo: \Clase{NodoLista}{T}, visitados: \conj{T}}{
-    (nodo = Null) \lor (nodo \neq Null \land nodo \notin visitados \yLuego sinRepetidos(nodo.siguiente, visitados \union \langle nodo \rangle))
-  }
   \vspace{1em}
   \begin{proc}{conjVacio}{}{\Clase{ConjuntoLista}{T}}
     \begin{ImplementationCode}{360px}
-      res:= new ConjuntoLista<T>()
-      res.datos:= new ListaEnlazada<T>()
+      var nuevaListaEnlazada: ListaEnlazada<T>
+          nuevaListaEnlazada:= new listaEnlazadaVacia()
+
+      res.datos:= nuevaListaEnlazada
       res.tamaño:= 0
 
       return res
     \end{ImplementationCode}
   \end{proc}
+  \begin{proc}{buscarIndicePorValor}{\In c: \Clase{ConjuntoLista}{T}, \In t: T}{Boolean}
+    \begin{ImplementationCode}{360px}
+      // Devuelve -1 si el elemento no pertenece
+      // Devuelve 0 <= i < c.tamaño si el elemento pertenece
+      var i: int
+          i:= 0
+      var indice: int
+          indice:= -1
+      
+      while (i < c.datos.tamaño() && indice == -1) do
+        if c.datos.obtener(i) == t then
+          indice:= i
+        endif
+  
+        i:= i + 1
+      endwhile
+  
+      return indice
+    \end{ImplementationCode}
+  \end{proc}
+
   \begin{proc}{pertenece}{\In c: \Clase{ConjuntoLista}{T}, \In t: T}{Boolean}
     \begin{ImplementationCode}{360px}
-      var l: ListaEnlazada<T>
-          l:= c.datos
-      
-      var nodoActual: NodoLista<T>
-          nodoActual:= l.primero
-      
-      while (nodoActual != null && nodoActual.valor != t) do
-        nodoActual:= nodoActual.siguiente
-      endwhile
+      var indice: int
+          indice:= buscarIndicePorValor(c, t)
 
-      return nodoActual != null
+      return indice != -1
     \end{ImplementationCode}
   \end{proc}
   \begin{proc}{agregarRapido}{\Inout c: \Clase{ConjuntoLista}{T}, t: T}{}
     \begin{ImplementationCode}{360px}
       c.datos.agregarAtras(t)
-      c.tamaño:= c.datos.longitud
+      c.tamaño = c.datos.tamaño()
 
       return
     \end{ImplementationCode}
   \end{proc}
-  \begin{proc}{agregar}{\Inout c: \Clase{ConjuntoLista}{T}, t: T}{}
+  \comentario{agregarSiNoPertenece: For the sake of declaratividad}
+  \begin{proc}{agregarSiNoPertenece}{\Inout c: \Clase{ConjuntoLista}{T}, t: T}{}
     \begin{ImplementationCode}{360px}
-      var pertenece: Boolean
-          pertenece:= pertenece(c, t)
-
-      if !pertenece then
+      if !pertenece(c, t) then
         agregarRapido(c, t)
       endif
 
       return
     \end{ImplementationCode}
   \end{proc}
+  \begin{proc}{agregar}{\Inout c: \Clase{ConjuntoLista}{T}, t: T}{}
+    \begin{ImplementationCode}{360px}
+      agregarSiNoPertenece(c, t)
+
+      return
+    \end{ImplementationCode}
+  \end{proc}
   \begin{proc}{sacar}{\Inout c: \Clase{ConjuntoLista}{T}, t: T}{}
     \begin{ImplementationCode}{360px}
-      var l: ListaEnlazada<T>
-          l:= c.datos
+      if pertenece(c, t) then
+        var indice: int
+            indice:= buscarIndicePorValor(c, t)
 
-      var nodoPrevio: NodoLista<T>
-      var nodoActual: NodoLista<T>
-          nodoPrevio:= null
-          nodoActual:= l.primero
-      
-      while (nodoActual != null) do
-        if nodoActual.valor == t then
-          l.eliminarSiguiente(l, nodoPrevio)
-          return
-        endif
-
-        nodoPrevio:= nodoActual
-        nodoActual:= nodoActual.siguiente
-      endwhile
-
-      c.tamaño:= l.longitud
+        c.datos.eliminar(indice)
+        c.tamaño = c.datos.tamaño()
+      endif
 
       return
     \end{ImplementationCode}
   \end{proc}
   \begin{proc}{unir}{\Inout c1: \Clase{ConjuntoLista}{T}, \Inout c2: \Clase{ConjuntoLista}{T}}{}
     \begin{ImplementationCode}{360px}
-      var nodoActual: NodoLista<T>
-          nodoActual:= c2.datos.primero
+      var i: int
+          i:= 0
       
-      while (nodoActual != null) do
-        agregar(c1, nodoActual.valor)
-        nodoActual:= nodoActual.siguiente
+      while (i < c2.tamaño()) do
+        agregarSiNoPertenece(c1, c2.datos.obtener(i))
+        i:= i + 1
       endwhile
-
-      return
     \end{ImplementationCode}
   \end{proc}
   \begin{proc}{intersecar}{\Inout c1: \Clase{ConjuntoLista}{T}, \In c2: \Clase{ConjuntoLista}{T}}{}
+    % vamos a usar !pertenece y en ese caso borramos de c1.
     \begin{ImplementationCode}{360px}
-      var l: ListaEnlazada<T>
-          l:= c.datos
+      var nuevaListaEnlazada: ListaEnlazada<T>
+          nuevaListaEnlazada:= new listaEnlazadaVacia()
 
-      var nodoPrevio: NodoLista<T>
-      var nodoActual: NodoLista<T>
-          nodoPrevio:= null
-          nodoActual:= c.datos.primero
+      var i: int
+          i:= 0
       
-      while (nodoActual != null) do
-        if !pertenece(c2, nodoActual.valor) then
-          l.eliminarSiguiente(l, nodoPrevio)
+      while (i < c1.tamaño()) do
+        if pertenece(c2, c1.datos.obtener(i)) then
+          nuevaListaEnlazada.agregarAtras(c1.datos.obtener(i))
         endif
-
-        nodoPrevio:= nodoActual
-        nodoActual:= nodoActual.siguiente
+        i:= i + 1
       endwhile
 
-      c.tamaño:= l.longitud
-
-      return
+      c.datos = nuevaListaEnlazada
+      c.tamaño = c.datos.tamaño()
     \end{ImplementationCode}
   \end{proc}
 \end{ModuloImplements}

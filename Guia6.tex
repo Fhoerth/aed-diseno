@@ -161,7 +161,7 @@
     \paraTodo[unalinea]{j}{\ent}{0 \leq j < c.tama$ñ$o \implicaLuego def(c.datos[j])}
   }
   \vspace{1em}
-  \begin{proc}{pertenece}{\In c: \Clase{ConjuntoAcotadoArr}{T}, t: T}{Boolean}
+  \begin{proc}{pertenece}{\In c: \Clase{ConjuntoAcotadoArr}{T}, \In t: T}{Boolean}
     \begin{ImplementationCode}{320px}
       var i: int
           i:= 0
@@ -177,7 +177,8 @@
       return false
     \end{ImplementationCode}
   \end{proc}
-  \begin{proc}{agregar}{\Inout c: \Clase{ConjuntoAcotadoArr}{T}, t: T}{}
+  \comentario{agregarSiNoPertenece: For the sake of declaratividad}
+  \begin{proc}{agregarSiNoPertenece}{\Inout c: \Clase{ConjuntoAcotadoArr}{T}, \In t: T}{}
     \begin{ImplementationCode}{320px}
       if !pertenece(c, t) then
         c.datos[c.tamaño]:= t
@@ -187,7 +188,14 @@
       return
     \end{ImplementationCode}
   \end{proc}
-  \begin{proc}{sacarSiPertenece}{\Inout c: \Clase{ConjuntoAcotadoArr}{T}, t: T}{}
+  \begin{proc}{agregar}{\Inout c: \Clase{ConjuntoAcotadoArr}{T}, \In t: T}{}
+    \begin{ImplementationCode}{320px}
+      agregarSiNoPertenece(c, t)
+      
+      return
+    \end{ImplementationCode}
+  \end{proc}
+  \begin{proc}{sacar}{\Inout c: \Clase{ConjuntoAcotadoArr}{T}, \In t: T}{}
     \begin{ImplementationCode}{320px}
       var i: int
           i:= 0
@@ -206,29 +214,13 @@
       return
     \end{ImplementationCode}
   \end{proc}
-  \begin{proc}{sacar}{\Inout c: \Clase{ConjuntoAcotadoArr}{T}, t: T}{}
-    \begin{ImplementationCode}{320px}
-      sacarSiPertenece(c, t)
-
-      return
-    \end{ImplementationCode}
-  \end{proc}
-  \begin{proc}{min}{\In a: int, \In b: int}{int}
-    \begin{ImplementationCode}{360px}
-      if a <= b then
-        return a
-      endif
-
-      return b
-    \end{ImplementationCode}
-  \end{proc}
   \begin{proc}{unir}{\Inout c1: \Clase{ConjuntoAcotadoArr}{T}, \In c2: \Clase{ConjuntoAcotadoArr}{T}}{}
     \begin{ImplementationCode}{320px}
       var i: int
           i:= 0
 
       while (i < c2.tamaño) do
-        agregar(c1, c2.datos[i])
+        agregarSiNoPertenece(c1, c2.datos[i])
         i:= i + 1
       endwhile
 
@@ -240,8 +232,20 @@
       var i: int
           i:= 0
 
+      while (i < c1.tamaño) do
+        if !pertenece(c2, c1.datos[i]) then
+          sacar(c1, c1.datos[i])
+        endif
+
+        i:= i + 1
+      endwhile
+
+      i:= 0
+
       while (i < c2.tamaño) do
-        sacarSiPertenece(c1, c2.datos[i])
+        if !pertenece(c1, c2.datos[i]) then
+          sacar(c1, c2.datos[i])
+        endif
 
         i:= i + 1
       endwhile

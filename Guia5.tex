@@ -354,8 +354,8 @@
     \par \ensuremath{\forall n \geq n_2 : f(n) \geq j \cdot n \cdot log(n)}
     \par Tenemos que: \ensuremath{k \cdot n \geq j \cdot n \cdot log(n) \Leftrightarrow \frac{k}{j} \geq log(n)}
     \par Claramente la desigualdad no se va a cumplir para todo \ensuremath{n} puesto que \ensuremath{\frac{k}{j}} es constante.
-    \par \ensuremath{\limn log(n) = \infty}, y por definición de límite, se tiene que
-    \par \ensuremath{\exists \alpha_0 \in \nat \ tq\ \forall n > \alpha_0 : log(n) > \frac{k}{j} (\frac{k}{j} > 0)}.
+    \par Tomo \ensuremath{M = \frac{k}{j} > 0}. Y como \ensuremath{\limn log(n) = +\infty}. Por definición de límite se tiene:
+    \par \ensuremath{\forall M > 0 \ \exists \alpha_0 \in \nat \ tq\ \forall n > \alpha_0 : log(n) > M}.
   \end{groupIzq}
   \par Con lo cual llegamos a un absurdo, y podemos concluir que \ensuremath{\nexists f\ tq\ f \in O(n) \land f \in \Omega(n \cdot log(n))} 
   \par Solo nos resta ver que el conjunto \ensuremath{\Theta(n) \union \Theta(n \cdot log(n))} no es vacío.

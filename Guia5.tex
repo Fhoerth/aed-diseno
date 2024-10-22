@@ -295,6 +295,76 @@
   \par Entonces, si podemos acotar $"$por arriba$"$ al peor caso con una función lineal, también podremos acotarlo por arriba con una función cuadrática. Y particularmente también vamos a poder acotar por arriba (con ambas) al \ensuremath{T_{mejor}}
 \end{groupIzq}
 
+\newpage
+
+\Title{Ejercicio 5}
+\demoline
+\par $1.$ Si \ensuremath{O(f(n)) \interseccion \Omega(g(n)) = \emptyset}, entonces \ensuremath{O(g(n)) \interseccion \Omega(f(n)) = \emptyset}.
+\demoline
+\begin{groupIzq}{2.5em}
+  \par Esto es falso. Para \ensuremath{f(n) = n} y \ensuremath{g(n) = n^2}, \ensuremath{O(n) \interseccion \Omega(n^2) = \emptyset}
+  \par Pero sin embargo, \ensuremath{O(n^2) \interseccion \Omega(n) \neq \emptyset}
+\end{groupIzq}
+
+\demoline
+\demoline
+\par $2.$ Si \ensuremath{f \in O(g)}, entonces \ensuremath{f \in \Theta(g) \union \Theta(h)} para cualquier función \ensuremath{h}..
+
+\demoline
+\demoline
+\par $3.$ Si \ensuremath{f \in O(g)} y \ensuremath{h \in O(g)}, entonces \ensuremath{(f + h) \in O(g)}
+\demoline
+\begin{groupIzq}{2.5em}
+  \par Esto es \textbf{Verdadero}. Demostrémoslo.
+  \par \ensuremath{f \in O(g) \Leftrightarrow \exists n_0, \alpha > 0\ tq\ \forall n \geq n_0: f(n) \leq \alpha \cdot g(n)}
+  \par \ensuremath{h \in O(g) \Leftrightarrow \exists m_0, \lambda > 0\ tq\ \forall n \geq n_0: h(n) \leq \lambda \cdot g(n)}
+  \par Ésta es nuestra hipótesis.
+  \par Sea \ensuremath{\gamma_0 = max(m_0, n_0)}, se tiene entonces que \ensuremath{\gamma_0 \geq m_0 \land \gamma_0 \geq n_0}.
+  \par Y también por hipótesis vale que:
+  \par \hspace{1em} \ensuremath{\forall n \geq \gamma_0: f(n) \leq \alpha \cdot g(n)}
+  \par \hspace{1em} \ensuremath{\forall n \geq \gamma_0: h(n) \leq \lambda \cdot g(n)}
+  \par Se concluye que \ensuremath{f(n) + h(n) \leq \alpha \cdot g(n) + \lambda \cdot g(n) \Rightarrow f(n) + h(n) \leq (\alpha + \lambda) \cdot g(n)\ \forall n \geq \gamma_0}
+  \par Por lo tanto, \ensuremath{(f + h) \in O(g)}
+\end{groupIzq}
+
+\demoline
+\demoline
+\par $4.$ \ensuremath{O(n^2) \interseccion \Omega(n) = \Theta(n^2)}
+\demoline
+\begin{groupIzq}{2.5em}
+  \par Esto es \textbf{Falso}.
+  \par \ensuremath{n \in O(n^2) \land n \in \Omega(n) \Leftrightarrow n \in O(n^2) \interseccion \Omega(n)}
+  \par \underline{Respuesta corta}: Nunca vamos a poder encontrar \ensuremath{k_1, k_2 > 0}, tal que \ensuremath{n} quede $"$ensanguchada$"$ por \ensuremath{n^2}.
+  \par \underline{Respuesta larga}: Probar que \ensuremath{n \in \Theta(n^2)^c}
+\end{groupIzq}
+
+\demoline
+\demoline
+\par $5.$ \ensuremath{\Theta(n) \union \Theta(n \cdot log(n))= \Omega(n \cdot log(n)) \interseccion O(n)} 
+\demoline
+\begin{groupIzq}{2.5em}
+  \par Esto es \textbf{Falso}.
+  \par \ensuremath{\Omega(n \cdot log(n)) \interseccion O(n) = \emptyset}
+  \par Mostremoslo. Supongamos que existe \ensuremath{f} tal que \ensuremath{f \in O(n)} y \ensuremath{f \in \Omega(n \cdot log(n))}. Luego:
+  \begin{groupIzq}{1em}
+    \par \ensuremath{\exists n_0, k > 0\ tq\ \forall n \geq n_0 : f(n) \leq k \cdot n}
+    \par \ensuremath{\exists n_1, j > 0\ tq\ \forall n \geq n_1 : f(n) \geq j \cdot n \cdot log(n)}
+    \par Sea \ensuremath{n_2=max(n_0, n_1)}, entonces se cumple que:
+    \par \ensuremath{\forall n \geq n_2 : f(n) \leq k \cdot n}
+    \par \ensuremath{\forall n \geq n_2 : f(n) \geq j \cdot n \cdot log(n)}
+    \par Tenemos que: \ensuremath{k \cdot n \geq j \cdot n \cdot log(n) \Leftrightarrow \frac{k}{j} \leq log(n)}
+    \par Claramente la desigualdad no se va a cumplir para todo \ensuremath{n} puesto que \ensuremath{\frac{k}{j}} es constante.
+    \par \ensuremath{\limn log(n) = \infty}, y por definición de límite, se tiene que
+    \par \ensuremath{\exists \alpha_0 \in \nat \ tq\ \forall n > \alpha_0 : log(n) > \frac{k}{j} (\frac{k}{j} > 0)}.
+  \end{groupIzq}
+  \par Con lo cual llegamos a un absurdo, y podemos concluir que \ensuremath{\nexists f\ tq\ f \in O(n) \land f \in \Omega(n \cdot log(n))} 
+  \par Solo nos resta ver que el conjunto \ensuremath{\Theta(n) \union \Theta(n \cdot log(n))} no es vacío.
+  \par Trivialmente \ensuremath{n \in \Theta(n)}, así que la unión tiene al menos un elemento, por lo cual no se da la igualdad.
+\end{groupIzq}
+
+
+
+
 
 % \begin{groupIzq}{-42.5em}
 %   \[

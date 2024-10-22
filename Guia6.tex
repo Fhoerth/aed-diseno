@@ -83,73 +83,38 @@
       return nodoActual.valor
     \end{ImplementationCode}
   \end{proc}
-  \begin{proc}{eliminarPrimero}{\Inout l: \Clase{ListaEnlazada}{T}}{}
-    \begin{ImplementationCode}{360px}
-      if l.primero == l.ultimo then
-        l.primero:= null
-        l.ultimo:= null
-      else
-        l.primero:= l.primero.siguiente
-
-        if l.primero.siguiente == null then
-          l.ultimo:= l.primero
-        endif
-      endif
-
-      l.longitud:= l.longitud - 1
-
-      return
-    \end{ImplementationCode}
-  \end{proc}
-  \begin{proc}{eliminarUltimo}{\Inout l: \Clase{ListaEnlazada}{T}, \In penultimoNodo: \Clase{NodoLista}{T}}{}
-    \begin{ImplementationCode}{360px}
-      penultimoNodo.siguiente:= null
-      l.ultimo:= penultimoNodo
-
-      if penultimoNodo == l.primero then
-        l.primero:= penultimoNodo
-      endif
-  
-      l.longitud:= l.longitud - 1
-
-      return
-    \end{ImplementationCode}
-  \end{proc}
-  \begin{proc}{eliminarSiguiente}{\Inout l: \Clase{ListaEnlazada}{T}, \In nodoPrevio: \Clase{NodoLista}{T}}{}
-    \begin{ImplementationCode}{360px}
-      if nodoPrevio == null then
-        eliminarPrimero(l)
-        return
-      endif
-      
-      if nodoPrevio.siguiente == l.ultimo
-        eliminarUltimo(l, nodoPrevio)
-        return
-      endif
-
-      // Eliminar nodo intermedio
-      nodoPrevio.siguiente:= nodoPrevio.siguiente.siguiente
-      l.longitud:= l.longitud - 1
-
-      return
-    \end{ImplementationCode}
-  \end{proc}
   \begin{proc}{eliminar}{\Inout l: \Clase{ListaEnlazada}{T}, i: int}{}
     \begin{ImplementationCode}{350px}
-      var nodoPrevio: NodoLista<T>
+      if i == 0 then
+        l.primero:= l.primero.siguiente
+        l.longitud:= l.longitud - 1
+
+        if l.longitud == 1
+          l.ultimo:= null
+          l.longitud:= 0
+        endif
+
+        return
+      endif
+
       var nodoActual: NodoLista<T>
       var j: int
-          nodoPrevio:= null
           nodoActual:= l.primero
           j:= 0
 
-      while (j < i) do
-        nodoPrevio:= nodoActual
+      while (j < i - 1) do
         nodoActual:= nodoActual.siguiente
         j:= j + 1
       endwhile
 
-      eliminarSiguiente(l, nodoPrevio)
+      nodoActual.siguiente:= nodoActual.siguiente.siguiente
+
+      if nodoActual.siguiente == null:
+        l.ultimo:= nodoActual
+      endif
+
+      l.longitud:= l.longitud - 1
+
       return
     \end{ImplementationCode}
   \end{proc}

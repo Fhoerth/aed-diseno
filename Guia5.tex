@@ -1,0 +1,380 @@
+\documentclass[10pt,a4paper]{article}
+\input{AEDmacros}
+\input{Macros}
+\usepackage{graphicx}
+\usepackage{geometry}
+
+\begin{document}
+
+\Title{Ejercicio 1}
+\par Probar que las siguientes afirmaciones son verdaderas utilizando las definiciones.
+\demoline
+
+\par $a)$ \ensuremath{n^2 - 4n - 2 \in O(n^2)}
+\demoline
+\begin{groupIzq}{2.5em}
+  \par \ensuremath{O(n^2) = \{f\ /\ \exists\ n_0, k > 0\ tq.\ \forall n \geq n_0 : f(n) \leq k \cdot n^2 \}}
+  \par Busquemos ese par \ensuremath{n_0\ y\ k > 0} para demostrar que pertenece.
+  \par \ensuremath{n^2 - 4n - 2 \in O(n^2) \Leftrightarrow \exists\ n_0, k > 0\ tq.\ \forall n \geq n_0 : n^2 - 4n - 2 \leq k \cdot n^2}
+  \par \underline{Calculo auxiliar:}
+  \begin{groupIzq}{0.75em}
+    \par \ensuremath{n^2 - 4n - 2 \leq k \cdot n^2 \Leftrightarrow \frac{n^2 - 4n - 2}{n^2} \leq k}
+    \par Elijamos, por ejemplo \ensuremath{n=1}.
+    \par \ensuremath{(1 - 4 - 2)/1 \leq k \Leftrightarrow -5 \leq k}.
+    \par \ensuremath{k} debe ser mayor a 0, elijamos \ensuremath{k=1}.
+  \end{groupIzq}
+  \par \ensuremath{Sean\ k=1\ y\ n_0=1\ qvq\ \forall n \geq n_0: n^2 - 4n - 2 \leq 1 \cdot n^2}
+  \par \ensuremath{Sea\ n \geq n_0:}
+  \par \ensuremath{n^2 - 4n - 2 \leq 1 \cdot n^2 \Leftrightarrow 0 \leq 4n + 2}, y esto es \textbf{Verdadero} \ensuremath{(n \geq n_0 \geq 1)}
+  \par Conclusión: \ensuremath{n^2 - 4n - 2 \leq 1 \cdot n^2\ \forall n \geq n_0}
+  \par Exhibimos \ensuremath{k=1} y \ensuremath{n_0=1}, vimos que la desigualdad se cumple.
+  \par \ensuremath{n^2 - 4n - 2 \in O(n^2)}
+\end{groupIzq}
+\demoline
+\demoline
+
+\par $b)$ Para todo \ensuremath{k \in \nat} y toda función \ensuremath{f: \nat \rightarrow \nat}, si \ensuremath{f \in O(n^k)}, entonces \ensuremath{f \in O(n^{k+1})}
+\demoline
+\begin{groupIzq}{2.5em}
+  \par \underline{Afirmo}: Sean \ensuremath{\lambda > 0, m \in \nat}, se cumple que \ensuremath{\lambda \cdot m^k \leq \lambda \cdot m^{k+1} \Leftrightarrow m^k \leq m^{k+1} \Leftrightarrow 1 \leq m}. Y esto es \textbf{Verdadero}, pues \ensuremath{m \in \nat}.
+  \par \ensuremath{f \in O(n^k) \Leftrightarrow \exists n_0, j > 0\ tq.\ \forall n \geq n_0 : f(n) \leq j \cdot n^k \Rightarrow \exists n_0, j > 0\ tq.\ \forall n \geq n_0 : f(n) \leq j \cdot n^k \leq j \cdot n^{k+1}}
+  \par Pues ya vimos que \ensuremath{j \cdot n^k \leq j \cdot n^{k+1}} (\ensuremath{j > 0, n \geq n_0 \geq 1, n \in \nat}).
+  \par \ensuremath{f \in O(n^k) \Rightarrow f \in O(n^{k+1})}
+\end{groupIzq}
+\demoline
+\demoline
+
+\par $c)$ Si \ensuremath{f: \nat \rightarrow \nat} es tal que \ensuremath{f \in O(log\ n)}, entonces \ensuremath{f \in O(n)}
+\demoline
+\begin{groupIzq}{2.5em}
+  \par Acá utilizaremos que \ensuremath{log(n) \leq n\ \forall n \in \nat}
+  \par \ensuremath{f \in O(log\ n) \Leftrightarrow \exists n_0, k > 0\ tq.\ \forall n \geq n_0 : f(n) \leq k \cdot log(n)}
+  \par \hspace{6em}\ensuremath{\Rightarrow \exists n_0, k > 0\ tq.\ \forall n \geq n_0 : f(n) \leq k \cdot log(n) \leq k \cdot n}
+  \par \hspace{6em}\ensuremath{\Rightarrow f \in O(n)}
+\end{groupIzq}
+
+\newpage
+
+\Title{Ejercicio 2}
+\par Determinar si cada una de las siguientes afirmaciones es verdadera o falsa. \textbf{Justificando} adecuadamente su respuesta.
+\demoline
+\par $a)$ \ensuremath{2^n \in O(1)}
+\demoline
+\begin{groupIzq}{2.5em}
+  \par En este ejercicio la vamos a complicar un poco (solucionarlo por límite es realmente trivial).
+  \par Mostremos que \ensuremath{2^n \in O(1)^c}
+  \par \ensuremath{O(g)^c = \{f\ /\ \forall n_0, k > 0,\ \exists n \geq n_0: f(n) > k \cdot g(n) \}}
+  \par \ensuremath{O(1)^c = \{f\ /\ \forall n_0, k > 0,\ \exists n \geq n_0: f(n) > k \cdot 1 \}}
+  \par \ensuremath{2^n \in O(1)^c = \{f\ /\ \forall n_0, k > 0,\ \exists n \geq n_0: 2^n > k \cdot 1 \}}
+  \demoline
+  \par Sean \ensuremath{n_0, k > 0, n_0 \in \nat}, tal que vale \ensuremath{2^{n_0} \leq k \cdot 1}
+  \par Tomo \ensuremath{n > max(n_0, log(k))}, se tiene entonces que \ensuremath{n > n_0} y que \ensuremath{n > log(k)}.
+  \par \underline{Afirmación}: \ensuremath{2^n > k \Leftrightarrow log(2^n) > log(k) \Leftrightarrow n > log(k)}, pero esto es \textbf{Verdadero} pues \ensuremath{n > log(k)}
+  \par Conclusión: \ensuremath{\forall n_0, k > 0,\ \exists n \geq n_0: 2^n > k \cdot 1}, \ensuremath{2^n \in O(1)^c \Leftarrow 2^n \notin O(1)}
+  \par 
+\end{groupIzq}
+
+\demoline
+\demoline
+\par $b)$ \ensuremath{n \in O(n!)}
+\demoline
+\begin{groupIzq}{2.5em}
+  \par Este sale con límite. \ensuremath{f(n) = n \land g(n) = n!}
+  \par Queremos ver que \ensuremath{\limn \frac{f(n)}{g(n)} = 0}. Entonces habremos mostrado que \ensuremath{n \in O(n!)}
+  \par \ensuremath{\limn \frac{n}{n!} = \limn\frac{n}{n \cdot (n - 1)!} = \limn\frac{1}{(n-1)!} = 0}.
+  \par Por la propiedad 8 que nos dieron en la Teórica, \ensuremath{n \in O(n!)}
+\end{groupIzq}
+
+\demoline
+\demoline
+\par $c)$ \ensuremath{n! \in O(n^n)}
+\demoline
+\begin{groupIzq}{2.5em}
+  \par Este sale con límite. \ensuremath{f(n) = n! \land g(n) = n^n}
+  \par Queremos ver que \ensuremath{\limn \frac{f(n)}{g(n)} = 0}. Entonces habremos mostrado que \ensuremath{n! \in O(n^n)}
+  \par Este es el límite más complicado y hay que usar el criterio de d$'$Alembert
+  \par \ensuremath{\limn \frac{n!}{n^n} = \limn\frac{\frac{(n+1)!}{(n+1)^{n+1}}}{\frac{n!}{n^n}} = \limn\frac{(n+1)!}{(n+1)^{(n+1)}} \cdot \frac{n^n}{n!} = \limn\frac{(n+1) \cdot n!}{(n+1) \cdot (n+1)^{n}} \cdot \frac{n^n}{n!}}
+  \par \hspace{4.85em} \ensuremath{= \limn\frac{n^n}{(n+1)^n} = \limn{(\frac{n}{n+1})^n} = \limn{(\frac{n+1-1}{n+1})^n} = \limn{(1 - \frac{1}{n+1})^n}}
+  \par \hspace{4.85em} \ensuremath{\overset{n \neq 0}{=} \limn{(1 - \frac{1}{n+1})^n} \cdot \frac{1 - \frac{1}{n+1}}{1 - \frac{1}{n+1}} =
+  \limn\frac{(1 - \frac{1}{n+1})^{n+1}}{1 - \frac{1}{n+1}}}
+  \par Cálculos auxiliares:
+  \par \ensuremath{\limn (1 - \frac{1}{(n+1)}) = 1}
+  \par \ensuremath{\limn {(1 - \frac{1}{n+1})}^{n+1} = \limn{(1 + \frac{1}{-(n+1)})}^{(n+1) \cdot \frac{-1}{-1}} = \limn\Bigg({{(1 + \frac{1}{-(n+1)})}^{-(n+1)}}\Bigg)^{-1} = e^{-1}}
+  \par Por álgebra de límites:
+  \par \ensuremath{\limn\frac{(1 - \frac{1}{n+1})^{n+1}}{1 - \frac{1}{n+1}} = \frac{e^{-1}}{1} < 1}
+  \par Cómo el límite es menor que 1, el criterio de d$'$Alembert nos dice que:
+  \par \ensuremath{\limn \frac{n!}{n^n} = 0}
+  \par \underline{Conclusión:} \ensuremath{2^n \in O(n^n)}
+\end{groupIzq}
+
+\demoline
+\demoline
+\par $d)$ \ensuremath{2^n \in O(n!)}
+\demoline
+\begin{groupIzq}{2.5em}
+  \par Vamos a probar uno utilizando inducción :).
+  \par \ensuremath{2^n \in O(n!) \Leftrightarrow \exists\ n_0, k > 0\ tq.\ \forall n \geq n_0 : 2^n \leq k \cdot n!}
+  \par Tomo \ensuremath{k=1} y \ensuremath{n_0 = 4}.
+  \par Objetivo: Ver que \ensuremath{\forall n \geq 1 : 2^n \leq n!}
+  \begin{groupIzq}{1em}
+    \par Sea \ensuremath{P(n): 2^n \leq n!}
+    \par Caso base con \ensuremath{n = 4}, queremos ver si \ensuremath{P(4)} es \textbf{Verdadero}.
+    \par \ensuremath{P(4): 2^4 \leq 4! \Leftrightarrow 16 \leq 24}. \ensuremath{P(4)} es \textbf{Verdadero}
+    \demoline
+    \par Sea \ensuremath{k \in \nat, k > 4}, y supongamos que \ensuremath{P(k)} vale, queremos ver que \ensuremath{P(k + 1)} también vale.
+    \par \ensuremath{2^{k+1} = 2 \cdot 2^k \overset{HI}{\leq} 2 \cdot k!}
+    \par Ahora quiero ver que: \ensuremath{2 \cdot k! \leq (k + 1)! \Leftrightarrow 2 \cdot k! \leq (k + 1) \cdot k! \Leftrightarrow 2 \leq (k + 1) \Leftrightarrow 1 \leq k}. Pero \ensuremath{k > 4}.
+    \par Luego \ensuremath{P(k) \Rightarrow P(k + 1)}.
+    \par Como vale el caso base, y \ensuremath{P(k) \Rightarrow P(k + 1)}, \ensuremath{2^n \leq n!\ \forall\ n \geq 4, n \in \nat}.
+  \end{groupIzq}
+  \par Retomando:
+  \par Pudimos ver que para \ensuremath{k=1} y \ensuremath{n_0 = 4}, se cumple que \ensuremath{\forall n \geq n_0: 2^n \leq n!}
+  \par \underline{Conclusión:} \ensuremath{2^n \in O(n!)}
+\end{groupIzq}
+
+\demoline
+\demoline
+\par $e)$ Para todo \ensuremath{i, j \in \nat, i \cdot n \in O(j \cdot n)}
+\demoline
+\begin{groupIzq}{2.5em}
+  \par Sean \ensuremath{i \in \nat}, \ensuremath{j \in \nat}
+  \par Se quiere ver si \ensuremath{i \cdot n \in O(j \cdot n) \Leftrightarrow \exists\ n_0, k > 0\ tq.\ \forall n \geq n_0 : i \cdot n \leq k \cdot j \cdot n}
+  \par Tomo \ensuremath{k = \ceil{\frac{i}{j}}} y \ensuremath{n_0 = 1}, se tiene \ensuremath{k \geq \frac{i}{j}}
+  \par Sea \ensuremath{n \in \nat, n \geq n_0}. QVQ: \ensuremath{i \cdot n \leq k \cdot j \cdot n \overset{n \in \nat}{\Leftrightarrow} \frac{i}{j} \leq k}, y esto es \textbf{Verdadero}.
+  \par \underline{Conclusión}: Para todo \ensuremath{i, j \in \nat, i \cdot n \in O(j \cdot n)}
+\end{groupIzq}
+
+\demoline
+\demoline
+\par $f)$ Para todo \ensuremath{k \in \nat}, \ensuremath{2^k \in O(1)}
+\demoline
+\begin{groupIzq}{2.5em}
+  \par Sea \ensuremath{k \in \nat}.
+  \par Se quiere ver si \ensuremath{2^k \in O(1) \Leftrightarrow \exists\ n_0, j > 0\ tq.\ \forall n \geq n_0 : 2^k \leq j}
+  \par Tomo \ensuremath{j = 2^k} y \ensuremath{n_0 = 1}.
+  \par Trivialmente \ensuremath{2^k \leq j} es una Tautología, y entonces vale \ensuremath{\forall n \geq n_0}. 
+  \par \underline{Conclusión}: \ensuremath{2^k \in O(1)\ \forall\ k \in \nat}
+\end{groupIzq}
+\demoline
+
+\demoline
+\demoline
+\par $g)$ \ensuremath{log\ n \in O(n)}
+\demoline
+\begin{groupIzq}{2.5em}
+  \par Ésto quedo demostrado en el Ej 1.4
+\end{groupIzq}
+
+\demoline
+\demoline
+\par $h)$ \ensuremath{n! \in O(2^n)}
+\demoline
+\begin{groupIzq}{2.5em}
+  \par Sea \ensuremath{f(n) = 2^n \land g(n) = n!}. Si demostramos que \ensuremath{\limn \frac{f(n)}{g(n)} = 0}, entonces tendremos que \ensuremath{g \notin O(f)}
+  \par Vamos a utilizar el criterio de d$'$Alembert
+  \par \ensuremath{\limn\frac{\frac{2^{n+1}}{(n+1)!}}{\frac{2^n}{n!}} = \limn\frac{2^{n+1}}{(n+1)!}\cdot\frac{n!}{2^n} = \limn\frac{2\cdot2^n}{(n+1)\cdot n!}\cdot\frac{n!}{2^n} = \limn\frac{2}{n+1} = 0 < 1}
+  \par Luego, \ensuremath{\limn \frac{f(n)}{g(n)} = 0 \Rightarrow g \notin O(f)}
+\end{groupIzq}
+
+\demoline
+\demoline
+\par $i)$ \ensuremath{n^5 + bn^3 \in \Theta(n^5) \Leftrightarrow b = 0}
+\demoline
+\begin{groupIzq}{2.5em}
+  \par Esto es \textbf{Falso}, tomemos \ensuremath{b = 1} y veamos que: \ensuremath{n^5 + n^3 \in \Theta(n^5) \Leftrightarrow n^5 + n^3 \in O(n^5) \land n^5 + n^3 \in \Omega(n^5)}
+  \par 1: \ensuremath{n^5 + n^3 \in O(n^5) \Leftrightarrow \exists n_0, k > 0\ tq\ \forall n \geq n_0: n^5 + n^3 \leq k \cdot n^5}
+  \begin{groupIzq}{1em}
+    \par \underline{Cálc. auxiliar}: \ensuremath{n^5 + n^3 \leq k \cdot n ^5 \Leftrightarrow 1 + \frac{n^3}{n^5} \leq k \Leftrightarrow 1 + \frac{1}{n^2} \leq k}.
+    \par Tomo \ensuremath{n_0 = 1} y \ensuremath{k = 2}.
+    \par Se quiere ver que \ensuremath{\forall n \geq 1: n^5 + n^3 \leq 2 \cdot n^5}
+    \par Sea \ensuremath{n \geq n_0}
+    \par \ensuremath{n^5 + n^3 \leq 2 \cdot n^5 \Leftrightarrow -n^5 + n^3 \leq 0 \Leftrightarrow n^5(-1 + \frac{n^3}{n^5}) \leq 0 \overset{n \in \nat}{\Leftrightarrow} -1 + \frac{1}{n^2} \leq 0}. Sabemos que \ensuremath{\frac{1}{n^2} < 1}.
+    \par Con lo cual la desigualdad es verdadera.
+    \par \underline{Conclusión:} \ensuremath{n^5 + n^3 \in O(n^5)} 
+  \end{groupIzq}
+  \par 2: \ensuremath{n^5 + n^3 \in \Omega(n^5) \Leftrightarrow \exists n_0, k > 0\ tq\ \forall n \geq n_0: k \cdot n^5 \leq n^5 + n^3}
+  \begin{groupIzq}{1em}
+    \par \underline{Cálc. auxiliar}: \ensuremath{k \cdot n ^5 \leq n^5 + n^3 \Leftrightarrow k \leq 1 + \frac{n^3}{n^5} \Leftrightarrow k \leq 1 + \frac{1}{n^2}}.
+    \par Tomo \ensuremath{n_0 = 1} y \ensuremath{k = 1}.
+    \par Se quiere ver que \ensuremath{\forall n \geq 1: n^5 \leq n^5 + n^3}
+    \par Sea \ensuremath{n \geq n_0}
+    \par \ensuremath{n^5 \leq n^5 + n^3 \Leftrightarrow 0 \leq n^3}. Esto vale \ensuremath{\forall n \in \nat}
+    \par Con lo cual la desigualdad es verdadera.
+    \par \underline{Conclusión:} \ensuremath{n^5 + n^3 \in \Omega(n^5)} 
+  \end{groupIzq}
+  \par Como \ensuremath{n^5 + n^3 \in O(n^5) \land n^5 + n^3 \in \Omega(n^5)}, se concluye que \ensuremath{n^5 + n^3 \in \Theta(n^5)}, con \ensuremath{b \neq 0}.
+  \par Por lo tanto, la afirmación es (muy) falsa.
+\end{groupIzq}
+\newpage
+
+\par $j)$ Para todo \ensuremath{k \in \reales}, \ensuremath{n^{k}log(n) \in O(n^{k+1})}
+\demoline
+\begin{groupIzq}{2.5em}
+  \par Sea \ensuremath{k \in \reales}, \ensuremath{n^{k}log(n) \in O(n^{k+1}) \Leftrightarrow \exists n_0, \lambda > 0\ tq\ \forall n \geq n_0 : n^{k}log(n) \leq \lambda \cdot n^{k+1}}
+  \par \underline{Cálc. auxiliar:} \ensuremath{n^{k}log(n) \leq \lambda \cdot n^{k+1} \overset{n \in \nat}{\Leftrightarrow} \frac{log(n)}{n} \leq \lambda}
+  \par Sea \ensuremath{n \in \nat}, tomo \ensuremath{\lambda = \ceil{\frac{log(n)}{n}}}, se tiene entonces que \ensuremath{\lambda \geq \frac{log(n)}{n}}
+  \par \underline{Aclaración}: Acá vemos que \ensuremath{\lambda} no depende de \ensuremath{k}, podríamos tomar cualquier \ensuremath{n}, calcular \ensuremath{\lambda} pero la demo sale más fácil así.
+  \par \ensuremath{n^{k}log(n) \leq \lambda \cdot n^{k+1} \Leftrightarrow \frac{log(n)}{n} \leq \lambda}. Y esto trivialmente vale.
+  \par \underline{Conclusión}: Para todo \ensuremath{k \in \reales}, \ensuremath{n^{k}log(n) \in O(n^{k+1})}
+\end{groupIzq}
+
+\demoline
+\demoline
+\par $k)$ Para toda función \ensuremath{f: \nat \rightarrow \nat}, se tiene que \ensuremath{f \in O(f)}
+\demoline
+\begin{groupIzq}{2.5em}
+  \par \ensuremath{f \in O(f) \Leftrightarrow \exists n_0, k > 0\ tq\ \forall n \geq n_0 : f(n) \leq k \cdot f(n)}.
+  \par Tomo \ensuremath{k = 1}, y trivialmente \ensuremath{f(n) \leq 1 \cdot f(n)\ \forall n \in \nat}
+  \par \underline{Conclusión}: \ensuremath{f \in O(f)}
+\end{groupIzq}
+
+\newpage
+
+\Title{Ejercicio 3}
+\par Que \ensuremath{O(g) \subseteq O(f)}, nos dice que \ensuremath{g} es de la misma familia (o menor) que \ensuremath{f}.
+\par Que \ensuremath{O(g) \subseteq O(f)} y \ensuremath{O(f) \subseteq O(g)} nos dice que \ensuremath{O(g) = O(f)} y por lo tanto \ensuremath{f} y \ensuremath{g} son de la misma familia.
+
+
+\demoline
+\demoline
+\demoline
+\demoline
+
+\Title{Ejercicio 4}
+\par $a)$ Sean \ensuremath{f} y \ensuremath{g} el mejor y el peor caso de un algoritmo. ¿Es cierto entonces que \ensuremath{g \notin O(f)}?
+\demoline
+\begin{groupIzq}{2.5em}
+  No es cierto. Por ejemplo, dado un algoritmo que recorre un arreglo de tamaño \ensuremath{n}, se tendrá que \ensuremath{T_{mejor} \in O(n)} y que \ensuremath{T_{peor} \in O(n)}, y en este caso \ensuremath{n \in O(n)}
+\end{groupIzq}
+
+\demoline
+\demoline
+\par $b)$ Sean \ensuremath{g(n)} y \ensuremath{h(n)} la cantidad de operaciones que realizan los algoritmos G y H en función del tamaño de la entrada.
+\par \hspace{0.90em} Si G ejecuta la mitad de operaciones que H, ¿vale que \ensuremath{g \in \Theta(h)}?
+\demoline
+\begin{groupIzq}{2.5em}
+  \par \underline{Respuesta corta}: Si, vale. Difieren en una constante.
+  \par \underline{Respuesta larga}: A demostrarlo...
+\end{groupIzq}
+
+\demoline
+\demoline
+\par $c)$ Un algoritmo que toma un arreglo como input realiza \ensuremath{\Theta(n^2)} operaciones cuando el arreglo tiene más de 100 \par \hspace{0.90em} elementos y \ensuremath{\Theta(1)} operaciones cuando tiene 100 o menos. ¿Cuál es el mejor caso del algortimo?
+\demoline
+\begin{groupIzq}{2.5em}
+  \par El mejor caso sigue siendo \ensuremath{\Theta(n^2)}.
+  \par Cuando en complejidad se habla de órden exacto, en este caso \ensuremath{\Theta(n^2)} es porque \ensuremath{\Theta(T_{peor}) = \Theta(T_{mejor})}
+  \par Nos interesa saber como se comporta el algoritmo para tamaños que tienden a tienden a infinito, el mejor caso debe ser el mismo independientemente del tamaño del input. Ejemplo: La búsqueda lineal, tiene mejor caso \ensuremath{O(1)} ya que no depende del tamaño del arreglo.
+\end{groupIzq}
+
+\demoline
+\demoline
+\par $d)$ Si \ensuremath{f(n) < g(n)\ \forall n}, ¿es cierto que \ensuremath{f \notin \Omega(g)}
+\demoline
+\begin{groupIzq}{2.5em}
+  \par No es cierto. Por ejemplo, tomemos \ensuremath{f(n) = \frac{n}{2}} y \ensuremath{g(n) = n}, se puede ver fácilmente como
+  \ensuremath{\frac{n}{2} \in \Omega(n)}
+\end{groupIzq}
+
+\demoline
+\demoline
+\par $e)$ Si la complejidad en el peor caso de un algoritmo es \ensuremath{\Omega(n)}, ¿es verdad que la complejidad de mejor caso
+\par \hspace{0.85em} no puede ser \ensuremath{O(1)}?
+\demoline
+\begin{groupIzq}{2.5em}
+  \par No es cierto. Como vimos antes, el caso de la búsqueda lineal tiene mejor caso \ensuremath{O(1)} y peor caso \ensuremath{O(n)}, y \ensuremath{n \in \Omega(n)}
+\end{groupIzq}
+
+\demoline
+\demoline
+\par $f)$ Si la complejidad temporal en el peor caso de un algoritmo pertenece a \ensuremath{O(n)}, entonces su complejidad temporal \par \hspace{0.85em} en el mejor caso también pertenece a \ensuremath{O(n^2)}.
+\demoline
+\begin{groupIzq}{2.5em}
+  \par Si es cierto. Esto se deduce de las definiciones de \ensuremath{T_{mejor}} y \ensuremath{T_{peor}}.
+  \par \ensuremath{T_{mejor}(n) \leq T_{peor}(n)\ \forall n \in \nat}.
+  \par Entonces, si podemos acotar $"$por arriba$"$ al peor caso con una función lineal, también podremos acotarlo por arriba con una función cuadrática. Y particularmente también vamos a poder acotar por arriba (con ambas) al \ensuremath{T_{mejor}}
+\end{groupIzq}
+
+\newpage
+
+\Title{Ejercicio 5}
+\demoline
+\par $1.$ Si \ensuremath{O(f(n)) \interseccion \Omega(g(n)) = \emptyset}, entonces \ensuremath{O(g(n)) \interseccion \Omega(f(n)) = \emptyset}.
+\demoline
+\begin{groupIzq}{2.5em}
+  \par Esto es falso. Para \ensuremath{f(n) = n} y \ensuremath{g(n) = n^2}, \ensuremath{O(n) \interseccion \Omega(n^2) = \emptyset}
+  \par Pero sin embargo, \ensuremath{O(n^2) \interseccion \Omega(n) \neq \emptyset}
+\end{groupIzq}
+
+\demoline
+\demoline
+\par $2.$ Si \ensuremath{f \in O(g)}, entonces \ensuremath{f \in \Theta(g) \union \Theta(h)} para cualquier función \ensuremath{h}..
+
+\demoline
+\demoline
+\par $3.$ Si \ensuremath{f \in O(g)} y \ensuremath{h \in O(g)}, entonces \ensuremath{(f + h) \in O(g)}
+\demoline
+\begin{groupIzq}{2.5em}
+  \par Esto es \textbf{Verdadero}. Demostrémoslo.
+  \par \ensuremath{f \in O(g) \Leftrightarrow \exists n_0, \alpha > 0\ tq\ \forall n \geq n_0: f(n) \leq \alpha \cdot g(n)}
+  \par \ensuremath{h \in O(g) \Leftrightarrow \exists m_0, \lambda > 0\ tq\ \forall n \geq n_0: h(n) \leq \lambda \cdot g(n)}
+  \par Ésta es nuestra hipótesis.
+  \par Sea \ensuremath{\gamma_0 = max(m_0, n_0)}, se tiene entonces que \ensuremath{\gamma_0 \geq m_0 \land \gamma_0 \geq n_0}.
+  \par Y también por hipótesis vale que:
+  \par \hspace{1em} \ensuremath{\forall n \geq \gamma_0: f(n) \leq \alpha \cdot g(n)}
+  \par \hspace{1em} \ensuremath{\forall n \geq \gamma_0: h(n) \leq \lambda \cdot g(n)}
+  \par Se concluye que \ensuremath{f(n) + h(n) \leq \alpha \cdot g(n) + \lambda \cdot g(n) \Rightarrow f(n) + h(n) \leq (\alpha + \lambda) \cdot g(n)\ \forall n \geq \gamma_0}
+  \par Por lo tanto, \ensuremath{(f + h) \in O(g)}
+\end{groupIzq}
+
+\demoline
+\demoline
+\par $4.$ \ensuremath{O(n^2) \interseccion \Omega(n) = \Theta(n^2)}
+\demoline
+\begin{groupIzq}{2.5em}
+  \par Esto es \textbf{Falso}.
+  \par \ensuremath{n \in O(n^2) \land n \in \Omega(n) \Leftrightarrow n \in O(n^2) \interseccion \Omega(n)}
+  \par \underline{Respuesta corta}: Nunca vamos a poder encontrar \ensuremath{k_1, k_2 > 0}, tal que \ensuremath{n} quede $"$ensanguchada$"$ por \ensuremath{n^2}.
+  \par \underline{Respuesta larga}: Probar que \ensuremath{n \in \Theta(n^2)^c}
+\end{groupIzq}
+
+\demoline
+\demoline
+\par $5.$ \ensuremath{\Theta(n) \union \Theta(n \cdot log(n))= \Omega(n \cdot log(n)) \interseccion O(n)} 
+\demoline
+\begin{groupIzq}{2.5em}
+  \par Esto es \textbf{Falso}.
+  \par \ensuremath{\Omega(n \cdot log(n)) \interseccion O(n) = \emptyset}
+  \par Mostremoslo. Supongamos que existe \ensuremath{f} tal que \ensuremath{f \in O(n)} y \ensuremath{f \in \Omega(n \cdot log(n))}. Luego:
+  \begin{groupIzq}{1em}
+    \par \ensuremath{\exists n_0, k > 0\ tq\ \forall n \geq n_0 : f(n) \leq k \cdot n}
+    \par \ensuremath{\exists n_1, j > 0\ tq\ \forall n \geq n_1 : f(n) \geq j \cdot n \cdot log(n)}
+    \par Sea \ensuremath{n_2=max(n_0, n_1)}, entonces se cumple que:
+    \par \ensuremath{\forall n \geq n_2 : f(n) \leq k \cdot n}
+    \par \ensuremath{\forall n \geq n_2 : f(n) \geq j \cdot n \cdot log(n)}
+    \par Tenemos que: \ensuremath{k \cdot n \geq j \cdot n \cdot log(n) \Leftrightarrow \frac{k}{j} \geq log(n)}
+    \par Claramente la desigualdad no se va a cumplir para todo \ensuremath{n} puesto que \ensuremath{\frac{k}{j}} es constante.
+    \par Tomo \ensuremath{M = \frac{k}{j} > 0}. Y como \ensuremath{\limn log(n) = +\infty}. Por definición de límite se tiene:
+    \par \ensuremath{\forall M > 0 \ \exists \alpha_0 \in \nat \ tq\ \forall n > \alpha_0 : log(n) > M}.
+  \end{groupIzq}
+  \par Con lo cual llegamos a un absurdo, y podemos concluir que \ensuremath{\nexists f\ tq\ f \in O(n) \land f \in \Omega(n \cdot log(n))} 
+  \par Solo nos resta ver que el conjunto \ensuremath{\Theta(n) \union \Theta(n \cdot log(n))} no es vacío.
+  \par Trivialmente \ensuremath{n \in \Theta(n)}, así que la unión tiene al menos un elemento, por lo cual no se da la igualdad.
+  \\
+  \ensuremath{\limn log(n) = +\infty}
+  \\\\\\\\
+  \ensuremath{\lim_{edad \to 50} iq(AlexBallera) = 0}
+\end{groupIzq}
+
+
+
+
+
+% \begin{groupIzq}{-42.5em}
+%   \[
+%     \limite{n}{\infty} \frac{\overset{1 \to 1}{1}}{\underset{n \to \infty}{n}} = 0
+%   \]
+% \end{groupIzq}
+
+
+\end{document}

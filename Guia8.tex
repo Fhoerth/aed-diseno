@@ -1,0 +1,57 @@
+\documentclass[10pt,a4paper]{article}
+\input{AEDmacros}
+\input{Macros}
+\usepackage{graphicx}
+\usepackage{geometry}
+
+\geometry{paperwidth=21cm, paperheight=80cm}
+
+\begin{document}
+
+\Title{Ejercicio 1}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{images/guia_8_ej_1.png}
+  \caption{Enunciado Problema 1}
+  \label{fig:ej_1}
+\end{figure}
+
+\vspace{1em}
+\Type{Producto}{int}
+\Type{Fecha}{int}
+\Type{Monto}{float}
+\Type{Ventas}{\Clase{SecuenciaImpl}{\Tupla{Producto, Fecha, Monto}}}
+\vspace{1em}
+\begin{ModuloImplements}{ComercioImpl}{Comercio}
+  \begin{Vars}
+    \Var{ventas}{Ventas}
+    \Var{totalPorProducto}{\Clase{DiccionarioImpl}{Producto, Monto}}
+    \Var{ultimoPrecio}{\Clase{DiccionarioImpl}{Producto, Monto}}
+  \end{Vars}
+
+  \aux{indiceDeFechaMasReciente}{c: ComercioImpl, $i_1$: \ent, $i_2$: \ent}{\ent}{
+    IfThenElse(
+      \\\Indent c.ventas.s[i_1]_1 > c.ventas.s[i_2]_1, i_1, i_2
+    \\\hspace{0.65em})
+  }
+  \aux{indiceUltimoPrecio}{c: ComercioImpl, ventas: Ventas, inicio: \ent}{\ent}{
+    IfThenElse(
+      \\\Indent inicio = |ventas.s| - 1,
+      \\\Indent inicio,
+      \\\Indent indiceDeFechaMasReciente(c, inicio, ultimoPrecio(c, ventas, inicio + 1))
+    \\\hspace{0.65em})
+  }
+  \aux{totalPorProducto}{c: ComercioImpl, producto: Producto}{\ent}{
+    \\\Indent \displaystyle \sum_{i=0}^{|c.ventas.s|-1} IfThenElse(c.ventas.s[i]_0 = producto, c.ventas.s[i]_2, 0)
+  }
+  \vspace{1em}
+  \pred{abs}{ab: \Clase{ArbolBinarioImpl}{T}, ab': \Clase{ArbolBinario}{T}}{
+    Abs
+  }
+  \pred{invRep}{l: \Clase{ListaEnlazada}{T}}{
+    InvRep
+  }
+\end{ModuloImplements}
+
+\end{document}

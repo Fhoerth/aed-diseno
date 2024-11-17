@@ -8,3 +8,5 @@ images
 !out/Guia6.pdf
 !out/GUia7.pdf
 !out/Guia8.pdf
+!images
+.DS_Store

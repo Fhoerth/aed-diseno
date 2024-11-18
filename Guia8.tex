@@ -285,7 +285,7 @@ Luego de leer bien el enunciado nos damos cuenta de que las \textbf{notas} está
   \begin{proc}{Asignar}{\Inout m: MatrizInfinitaDeBooleanosImpl, \In f: Fila, \In c: Columna, \In v: bool}{}
     \begin{ImplementationCode}{470px}
       m.agrandarVector(m, f, c)                    // O(n * m)
-      m.datos.obtener(f).modificarPosicion(c, v) // O(1)
+      m.datos.obtener(f).modificarPosicion(c, estaComplementada ? !v : v) // O(1)
       /**
        * Complejidad final
        * O(n * m)

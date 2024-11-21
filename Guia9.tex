@@ -11,6 +11,76 @@
 
 \begin{document}
 
+\Title{Ejercicio 14}
+
+\par Para poder resolver este problema con la complejidad que nos piden vamos
+\par a tener que utilizar una combinacion entre heap sort y listas enlazadas.
+\par Fijémonos por qué merge no sirve:
+\par Supongamos que tenemos el arreglo [2,3,4] y k=2
+\par Si pudieramos armar el siguiente arreglo en n*k: [2, 4, 3, 6, 4, 8]
+\par Nos damos cuenta que podríamos ir haciendo merge de a partes.
+\par Paso 1: merge([2,4], [3,6]) \ensuremath{-->} [2,3,4,6]
+\par Paso 2: merge([2,3,4,6], [4, 8]) \ensuremath{-->} [2,3,4,4,6,8]
+\par Esto no funciona, la complejidad de hacer merge en n listas ordenadas es cuadratica.
+\par (es una sumatoria de gauss)
+\par Así que: Heap sort al rescate. Vamos a usar listas enlazadas para que remover el primero sea O(1)
+
+\begin{proc}{ordenarMultiplos}{\In A: \Clase{Array}{int}, \In k: int}{\Clase{Array}{int}}
+  \begin{ImplementationCode}{470px}
+      var res: Array<int>
+          res:= new Array(A.length * k) // O(n*k)
+
+      var arregloDeListas: Array<ListaEnlazada<int>>
+          arregloDeListas:= new Array(A.length)
+      var j: int
+      var i: int
+          i:= 1
+          j:= 0
+
+      while (j < A.length) do
+        arregloDeListas[j] = listaVacia()
+
+        while (i <= k) do
+          arregloDeListas[j].agregarAtras(A[j] * i)
+          i:= i + 1
+        endwhile
+
+        i:= 1
+        j:= j + 1
+      endwhile
+
+      // Cola de prioridad min, por el primer elemento de la lista enlazada
+      var colaDePrioridad: ColaDePrioridadLog<ListaEnlazada<int>>
+          colaDePrioridad:= colaDePriodidadVacia()
+          j:= 0
+
+      while (j < arregloDeListas.length) do
+        colaDePrioridad.encolar(arregloDeListas[j])
+        j:= j + 1
+      endwhile
+
+      var res: Array<int>
+      var indiceActual: int
+          res:= new Array(A.length * k)
+          indiceActual:= 0
+
+      while (!colaDePriodidad.estaVacia())
+        var listaPrioritaria: ListaEnlazada<int>
+            listaPrioritaria:= colaDePriodidad.desencolarMax()
+        
+        res[i]:= listaEnlazada(listaPrioritaria.comienzo())
+
+        listaPrioritaria.fin()
+        colaDePriodidad.encolar(listaPrioritaria)
+
+        i:= i + 1
+      endwhile
+
+      return res
+  \end{ImplementationCode}
+\end{proc}
+\newpage
+
 \Title{Ejercicio 17}
 
 \Type{Planta}{string}

@@ -169,65 +169,65 @@
 \Title{Ejercicio 19}
 
 \Type{Prioridad}{int}
-\Type{Nodo}{\StructField{prioridad}{Prioridad}, \StructField{valor}{int}}
+\Type{Nodo}{\Struct{\StructField{prioridad}{Prioridad}, \StructField{valor}{int}}}
 
 \begin{proc}{OrdenarSegunCriterio}{\In s: \Clase{Array}{int}, \In crit: \Clase{Array}{Prioridad}}{\Clase{Array}{int}}
   \begin{ImplementationCode}{470px}
-    var s1: ListaEnlazada<Nodo>
-    var s2: ListaEnlazada<int>
-    var critDict: DiccionarioLog<int, Prioridad>
-        s1:= listaVacia()
-        s2:= listaVacia()
-        critDict:= diccionarioVacio()
+      var s1: ListaEnlazada<Nodo>
+      var s2: ListaEnlazada<int>
+      var critDict: DiccionarioLog<int, Prioridad>
+          s1:= listaVacia()
+          s2:= listaVacia()
+          critDict:= diccionarioVacio()
+      
+      var prioridad: int
+          prioridad:= 0
+      
+      // Inidicalizamos crit dict.
+      while (prioridad < crit.length) do
+        critDict.definir(crit[prioridad], prioridad)
+        prioridad:= prioridad + 1
+      endwhile
     
-    var prioridad: int
-        prioridad:= 0
+      var j: int
+          j:= 0
+      
+      // Insertamos en las listas s1 y s2.
+      while (j < s.length) do
+        if critDict.pertenece(s[j]) then
+          s1.agregarAtras(s[j], new Nodo(prioridad=critDict.obtener(s[j]), valor=s[j])
+        else
+          s2.agregarAtras(s[j])
+        endif
+      endwhile
     
-    // Inidicalizamos crit dict.
-    while (prioridad < crit.length) do
-      critDict.definir(crit[prioridad], prioridad)
-      prioridad:= prioridad + 1
-    endwhile
-  
-    var j: int
-        j:= 0
+      // Ordenar la primera parte del arreglo
+      var s1Arreglo: Array<Nodo>
+      var s1Valores: Array<int>
+          s1Arreglo:= toArray(s1)
+          s1Valores:= new Array(s1Arreglo.length)
     
-    // Insertamos en las listas s1 y s2.
-    while (j < s.length) do
-      if critDict.pertenece(s[j]) then
-        s1.agregarAtras(s[j], new Nodo(prioridad=critDict.obtener(s[j]), valor=s[j])
-      else
-        s2.agregarAtras(s[j])
-      endif
-    endwhile
-  
-    // Ordenar la primera parte del arreglo
-    var s1Arreglo: Array<Nodo>
-    var s1Valores: Array<int>
-        s1Arreglo:= toArray(s1)
-        s1Valores:= new Array(s1Arreglo.length)
-  
-    mergeSort(s1Arreglo) // ordenar s1Arreglo por prioridad.
-    // No hay criterio de desempate pues crit no tiene repetidos
-  
-    j:= 0
-    while (j < s1Arreglo.length) do
-      s1Valores[j]:= s1Arreglo[j].valor
-      j:= j + 1
-    endwhile 
-  
-    // Ordenar la segunda parte del arrego
-    var s2Valores: Array<int>
-        s2Valores:= toArray(s2)
-  
-    mergeSort(s2Valores) // ordenar s2Arreglo de menor a mayor
-  
-    // Concatenar en res.
-    var res: Array<int>
-        res:= concat(s1Valores, s2Valores)
-  
-    // Devolver res.
-    return res
+      mergeSort(s1Arreglo) // ordenar s1Arreglo por prioridad.
+      // No hay criterio de desempate pues crit no tiene repetidos
+    
+      j:= 0
+      while (j < s1Arreglo.length) do
+        s1Valores[j]:= s1Arreglo[j].valor
+        j:= j + 1
+      endwhile 
+    
+      // Ordenar la segunda parte del arrego
+      var s2Valores: Array<int>
+          s2Valores:= toArray(s2)
+    
+      mergeSort(s2Valores) // ordenar s2Arreglo de menor a mayor
+    
+      // Concatenar en res.
+      var res: Array<int>
+          res:= concat(s1Valores, s2Valores)
+    
+      // Devolver res.
+      return res
   \end{ImplementationCode}
 \end{proc}
 

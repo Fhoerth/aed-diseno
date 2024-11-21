@@ -44,7 +44,8 @@
         j:= j + 1
       endwhile
     
-      // Mismo que antes: Vamos a evitar iterar sobre stockTotal
+      // Evitemos a toda costa iterar sobre un dict
+      // justificar que se amortiza es siempre complicado
       // TRUCAZO
       var nodos: ListaEnlazada<Nodo>
           nodos:= listaVacia()

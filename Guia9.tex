@@ -68,7 +68,7 @@
         var listaPrioritaria: ListaEnlazada<int>
             listaPrioritaria:= colaDePriodidad.desencolarMax()
         
-        res[i]:= listaEnlazada(listaPrioritaria.comienzo())
+        res[i]:= listaEnlazada(listaPrioritaria.primero())
 
         listaPrioritaria.fin()
         colaDePriodidad.encolar(listaPrioritaria)

@@ -11,6 +11,97 @@
 
 \begin{document}
 
+\Title{Ejercicio Parcial Mediciones}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{images/mediciones.png}
+  \caption{Enunciado Mediciones}
+  \label{fig:mediciones}
+\end{figure}
+
+\Type{SensorId}{string}
+\Type{Sensor}{\Struct{\StructField{sensor}{SensorId}, \StructField{t}{int}, \StructField{v}{int}}}
+\Type{Medicion}{\Struct{\StructField{sensorId}{SensorId}, \StructField{t}{int}, \StructField{valorAcmulado}{int}, \StructField{mediciones}{int}}}
+
+\begin{proc}{MasContaminados}{\In A: \Clase{Array}{Sensor}, \In k: int}{\Clase{Array}{SensorId}}
+  \begin{ImplementationCode}{470px}
+      mergeSort(A) // Ordenar por mas recientes "t" mayor a menor. O(n*log(n))
+
+      // El diccionario digital funciona en O(1)
+      // por el largo maximo es de 64 caracteres
+      // y el alfabeto está acotado.
+      var mediciones: DiccionarioDigital<SensorId, Medicion>
+      var sensores: ListaEnlazada<SensorId>
+          mediciones:= diccionarioVacio()
+          sensores:= listaVacia()
+
+      var j: int
+          j:= 0
+
+      while (j < A.length) do // O(n)
+        var sensorId: SensorId
+            sensorId:= A[j].sensor
+
+        if (!mediciones.esta(sensorId)) then
+          // Nos quedamos con la fecha mas reciente
+          mediciones.definir( // O(1)
+            sensorId,
+            new Medicion(
+              sensorId=sensorId,
+              mediciones=1
+              t=A[j].t
+              valorAcumlado=A[j].v,
+            ) // O(1)
+            sensores.agregarAtras(sensorId)
+          )
+        else
+          var medicion: Medicion
+              medicion:= sensores.obtener(sensorId) // O(1)
+
+          if (medicion.mediciones < k) then
+            medicion.mediciones:= medicion.mediciones + 1 // O(1)
+            medicion.valorAcumulado:= medicion.valorAcumulado + A[j].v // O(1)
+            // Nos vamos quedando con la fecha mas reciente dentro de las "k" mediciones
+            medicion.t:= A[j].t // O(1)
+          endif
+        endif
+      endwhile
+
+      // Ahora que tenemos el diccionario armado, con los ultimos "k" valores
+      // acumulados, solo tenemos que pasarlo a un array y ordenarlo primero
+      // por el desempate (t menor a mayor) y luego por valorAcmulado (mayor a menor)
+      var resultadoMedicionesLista: ListaEnlazada<Medicion>
+      var resultadoMediciones: Array<Medicion>
+
+      while !(sensores.vacia()) do // O(n)
+        resultadoMedicionesLista.agregarAtras(mediciones.obtener(sensores.primero())) // O(1)
+        sensores.fin() // O(1)
+      endwhile
+
+      resultadoMediciones:= toArray(resultadoMediciones) // O(n)
+      
+      mergeSort(resultadoMediciones) // ordenar por "t" menor a mayor O(n*log(n))
+      mergeSort(resultadoMediciones) // ordenar por "valorAcumulado" mayor a menor O(n*log(n))
+
+      var res: Array<SensorId>
+          res:= new Array(resultadoMediciones.length) // O(n)
+          j:= 0 // O(1)
+
+      while (j < res.length) do // O(n)
+        res[j]:= resultadoMediciones[j].sensorId
+      endwhile
+
+      return res
+      /**
+      * Analisis complejidad: O(n*log(n))
+      */
+  \end{ImplementationCode}
+\end{proc}
+
+
+\newpage
+
 \Title{Ejercicio 14}
 
 \par Para poder resolver este problema con la complejidad que nos piden vamos
